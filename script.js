@@ -21,6 +21,7 @@ const resetgame=()=>{
         playerX=true;
         enable_buttons();
         msgContainer.classList.add("hide");
+        count=0;
     });
 }
 
