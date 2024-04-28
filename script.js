@@ -27,7 +27,6 @@ const resetgame=()=>{
 
 btns.forEach((btn)=>{
     btn.addEventListener("click",()=>{
-        count++;
         if (playerX) {
             btn.innerText="X";
             playerX=false;
@@ -36,7 +35,12 @@ btns.forEach((btn)=>{
             playerX=true;
         }
         btn.disabled=true;
-        checkwinner(count);
+        count++;
+        let isWinner=checkwinner();
+
+        if (count>=9 && !isWinner) {
+            game_tied();
+        }
     });
 });
 
@@ -59,11 +63,12 @@ const showWinner=(winner)=>{
 }
 
 const game_tied=()=>{
-    msg.innerText=`Well Played! It's a tie`;
-    msgContainer.classList.remove("hide");
+        msg.innerText=`Well Played! It's a tie`;
+        msgContainer.classList.remove("hide");
+    
 }
 
-const checkwinner=(count)=>{
+const checkwinner=()=>{
     for (const pattern of winPatterns) {        
         let pos1=btns[pattern[0]].innerText;
         let pos2=btns[pattern[1]].innerText;
@@ -73,10 +78,8 @@ const checkwinner=(count)=>{
             if (pos1===pos2 && pos2===pos3) {
                 showWinner(pos1);
                 disable_buttons();
+                return true;
             }
-        if (count>=9) {
-            game_tied();
-        }
     }
 }
 }
